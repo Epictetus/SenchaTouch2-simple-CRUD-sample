@@ -6,21 +6,20 @@ Ext.define('app.view.ui.ConfirmDialog', {
   extend: 'Ext.MessageBox',
   xtype: 'confirmdialog',
 
-  alert : function(config) {
+  confirm: function(config) {
     var title = config.title,
         msg = config.msg,
         fn = config.fn,
-        scope = config.fn;
+        scope = config.scope;
 
     return this.show({
-      title : config.title,
-      msg   : config.msg,
+      title: config.title,
+      msg: config.msg,
       buttons: Ext.MessageBox.YESNO,
-      fn: function(button) {
-        fn.call(scope, button);
-      },
-      scope : scope,
-      icon: Ext.MessageBox.QUESTION
+      promptConfig: false,
+      iconCls: Ext.MessageBox.QUESTION,
+      scope: scope,
+      fn: fn
     });
   }
 

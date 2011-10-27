@@ -10,26 +10,14 @@ Ext.define('app.view.todo.TodoForm', {
   config: {
     items: [
       {
+        xtype: 'hiddenfield',
+        name: 'id'
+      },
+
+      {
         xtype: 'textfield',
         name : 'title',
         label: 'Title'
-      },
-
-      {
-        xtype: 'selectfield',
-        name : 'priority',
-        label: 'Priority',
-        options: [
-          {text: 'High',  value: '1'},
-          {text: 'Medium', value: '2'},
-          {text: 'Low',  value: '3'}
-        ]
-      },
-
-      {
-        xtype: 'datepickerfield',
-        name : 'deadline',
-        label: 'Deadline'
       },
 
       {

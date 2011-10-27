@@ -5,6 +5,7 @@
 Ext.define('app.view.todo.TodoDetail', {
   extend: 'Ext.Sheet',
   xtype: 'tododetail',
+  id: 'todo-detail',
 
   requires: [
     'app.view.todo.TodoForm',
@@ -24,7 +25,6 @@ Ext.define('app.view.todo.TodoDetail', {
         layout: 'fit',
 
         items: [
-
           {
             docked: 'top',
             xtype : 'toolbar',
@@ -38,7 +38,6 @@ Ext.define('app.view.todo.TodoDetail', {
                 text: 'Back'
               }
             ]
-
           },
 
           {
@@ -57,11 +56,9 @@ Ext.define('app.view.todo.TodoDetail', {
                 iconCls: 'compose',
                 iconMask: true
               },
-
               {
                 xtype: 'spacer'
               },
-
               {
                 xtype: 'button',
                 id: 'delete-button',
@@ -89,15 +86,15 @@ Ext.define('app.view.todo.TodoDetail', {
     Ext.Animator.run(
       [
         {
-          element  : this.element,
-          xclass   : 'Ext.fx.animation.SlideIn',
+          element: this.element,
+          xclass: 'Ext.fx.animation.SlideIn',
           direction: 'left',
-          duration : this.animationDuration
+          duration: this.animationDuration
         },
 
         {
-          element : 'ext-mask-1',
-          xclass  : 'Ext.fx.animation.FadeIn',
+          element: 'ext-mask-1',
+          xclass: 'Ext.fx.animation.FadeIn',
           duration: this.animationDuration
         }
       ]
@@ -115,9 +112,9 @@ Ext.define('app.view.todo.TodoDetail', {
     Ext.Animator.run(
       [
         {
-          element  : me.element,
-          xclass   : 'Ext.fx.animation.SlideOut',
-          duration : this.animationDuration,
+          element: me.element,
+          xclass: 'Ext.fx.animation.SlideOut',
+          duration: this.animationDuration,
           preserveEndState: false,
           direction: 'right',
           onEnd: function() {
@@ -127,8 +124,8 @@ Ext.define('app.view.todo.TodoDetail', {
         },
 
         {
-          element : 'ext-mask-1',
-          xclass  : 'Ext.fx.animation.FadeOut',
+          element: 'ext-mask-1',
+          xclass: 'Ext.fx.animation.FadeOut',
           duration: this.animationDuration
         }
       ]

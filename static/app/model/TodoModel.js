@@ -6,10 +6,8 @@ Ext.define('app.model.TodoModel', {
   extend: 'Ext.data.Model',
 
   fields: [
-    {name: "id",    type: "int"},
+    {name: "id",    type: "string"},
     {name: "title", type: "string"},
-    {name: "priority", type: "string"},
-    {name: "deadline", type: "string"},
     {name: "detail", type: "string"}
   ],
 

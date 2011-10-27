@@ -13,7 +13,7 @@ Ext.define('app.view.todo.TodoList', {
       {
         xtype : 'toolbar',
         docked: 'top',
-        title: 'To-Do List'
+        title: 'Todo List'
       },
 
       {

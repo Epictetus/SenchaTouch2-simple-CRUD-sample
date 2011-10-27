@@ -17,22 +17,19 @@ Ext.define('app.controller.MainController', {
 
   refs: [
     {
-      ref     : 'todoList',
+      ref: 'todoList',
       selector: 'todolist'
     },
-
     {
-      ref     : 'todoDetail',
+      ref: 'todoDetail',
       selector: 'tododetail'
     },
-
     {
-      ref     : 'todoEdit',
+      ref: 'todoEditPanel',
       selector: 'todoeditpanel'
     },
-
     {
-      ref     : 'todoPanel',
+      ref: 'todoPanel',
       selector: 'todopanel'
     }
   ],
@@ -58,6 +55,10 @@ Ext.define('app.controller.MainController', {
 
       '#cancel-button': {
         tap: this.onCancelButtonTap
+      },
+
+      '#edit-button': {
+        tap: this.onEditButtonTap
       },
 
       '#delete-button': {
@@ -92,12 +93,11 @@ Ext.define('app.controller.MainController', {
   },
 
   onAddButtonTap: function(btn) {
-    var panel = this.getTodoEdit(),
+    var panel = this.getTodoEditPanel(),
         form = panel.down('formpanel'),
         newTodo = Ext.create('app.model.TodoModel', {
+          id: '',
           title: '',
-          priority: '',
-          deadline: new Date(),
           detail: ''
         }),
         mainView = Ext.getCmp('main-view');
@@ -123,41 +123,118 @@ Ext.define('app.controller.MainController', {
     });
   },
 
+  onEditButtonTap: function(btn, event) {
+    var detail = this.getTodoDetail(),
+        detailForm = detail.down('formpanel'),
+        record = detailForm.getRecord(),
+        editPanel = this.getTodoEditPanel(),
+        editForm = editPanel.down('formpanel'),
+        mainView = Ext.getCmp('main-view');
+
+    editForm.setRecord(record);
+
+    mainView.showPanel(editPanel, {
+      type: 'slide',
+      direction: 'left'
+    });
+  },
+
   onDeleteButtonTap: function() {
     var view = this.getTodoDetail(),
         dialog = view.down('#delete-confirm-dialog');
-    dialog.alert({
-      title : 'Confirm',
-      msg   : 'Do you delete this task?',
+    dialog.confirm({
+      title: 'Confirm',
+      msg: 'Do you want to remove this TODO?',
       scope: this,
       fn: function(btn) {
         if (btn == 'yes') {
-          console.log('a a a..');
+          this.doDelete();
         }
       }
     });
   },
 
   onSaveButtonTap: function() {
-    var view = this.getTodoEdit(),
+    var view = this.getTodoEditPanel(),
         dialog = view.down('#save-confirm-dialog');
-    dialog.alert({
+    dialog.confirm({
       title : 'Confirm',
-      msg   : 'Do you save this task?',
+      msg: 'Do you want to save this TODO?',
       scope: this,
       fn: function(btn) {
         if (btn == 'yes') {
-          console.log('a a a..');
+          this.doEdit();
         }
       }
     });
   },
 
   loadData: function() {
-    var todoStore = this.getTodoStore(),
-        todoList = this.getTodoList();
-    todoList.setStore(todoStore);
-    todoStore.load();
+    var store = this.getTodoStore(),
+        list = this.getTodoList();
+
+    if (list.getStore() == null) {
+      list.setStore(store);
+      store.load();
+    } else {
+      list.deselect(list.getLastSelected());
+      list.getStore().removeAll();
+      list.getStore().load();
+    }
+  },
+
+  doDelete: function() {
+    var detail = this.getTodoDetail(),
+        form = detail.down('formpanel'),
+        values = form.getValues();
+
+    Ext.Ajax.request({
+      url: '/todo',
+      method: 'post',
+      scope: this,
+      params: {
+        id: values['id'],
+        is_delete: true
+      },
+
+      success: function(){
+        detail.hide();
+        Ext.Msg.alert('Result', 'Remove completed ;)', this.loadData, this);
+      },
+
+      failure: function() {
+        Ext.Msg.alert('Result', 'Failure! Internal error occurred.');
+      }
+    });
+  },
+
+  doEdit: function() {
+    var view = this.getTodoEditPanel(),
+        detail = this.getTodoDetail(),
+        form = view.down('formpanel'),
+        values = form.getValues();
+
+    Ext.Ajax.request({
+      url: '/todo',
+      method: 'post',
+      scope: this,
+      params: {
+        id: values['id'],
+        title: values['title'],
+        detail: values['detail']
+      },
+
+      success: function(){
+        detail.hide();
+        this.onCancelButtonTap();
+        Ext.Msg.alert('Result', 'Save completed ;)', this.loadData, this);
+      },
+
+      failure: function() {
+        Ext.Msg.alert('Result', 'Failure! Internal error occurred.');
+      }
+    });
   }
 
 });
+

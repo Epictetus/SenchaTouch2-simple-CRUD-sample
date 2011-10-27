@@ -18,7 +18,7 @@ Ext.define('app.view.todo.TodoEditPanel', {
           {
             docked: 'top',
             xtype : 'toolbar',
-            title: 'Edit task',
+            title: 'Todo',
             items: [
               {
                 xtype: 'button',
@@ -27,7 +27,6 @@ Ext.define('app.view.todo.TodoEditPanel', {
                 text: 'Cancel'
               }
             ]
-
           },
 
           {

@@ -1,5 +1,5 @@
 /*
- * Bootstrap for application :)
+ * Bootstrap for Simple CRUD sample application :)
  */
 Ext.Loader.setConfig({
   enabled: true,

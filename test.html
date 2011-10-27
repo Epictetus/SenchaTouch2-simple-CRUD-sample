@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Test: Sencha Touch 2 Simple CRUD Sample App</title>
+
+    <!-- Jasmine Lib -->
+    <link rel="stylesheet" type="text/css" href="static/test/lib/jasmine.css">
+    <script type="text/javascript" src="static/test/lib/jasmine.js"></script>
+    <script type="text/javascript" src="static/test/lib/jasmine-html.js"></script>
+
+    <!-- Source -->
+    <link rel="stylesheet" href="static/resources/css/apple.css" type="text/css">
+    <script type="text/javascript" src="static/lib/sencha-touch-all.js"></script>
+
+    <script type="text/javascript" src="static/app/app.js"></script>
+
+    <!-- Spec -->
+    <script type="text/javascript" src="static/test/spec.js"></script>
+  </head>
+  <body>
+
+  <script type="text/javascript">
+    // To execute jsamine test after the drawing.
+    setTimeout(function() {
+      jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+      jasmine.getEnv().execute();
+    }, 1000);
+  </script>
+
+  </body>
+</html>
